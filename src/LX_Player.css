@@ -44,9 +44,9 @@
 }
 .LX_Player .LX_Progress .LX_TimeShow {
   position: absolute;
-  top: -30px;
-  height: 25px;
-  width: 50px;
+  top: -70px;
+  height: 65px;
+  aspect-ratio: 16/9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,11 +54,29 @@
   border-radius: 5px;
   background-color: #050614;
   pointer-events: none;
+  overflow: hidden;
   visibility: hidden;
   font-size: 12px;
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.2s, visibility 0.5s;
   user-select: none;
+}
+.LX_Player .LX_Progress .LX_TimeShow::before {
+  content: "";
+  position: absolute;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 50%);
+  height: 100%;
+  width: 100%;
+}
+.LX_Player .LX_Progress .LX_TimeShow video {
+  height: 100%;
+  width: 100%;
+}
+.LX_Player .LX_Progress .LX_TimeShow .LX_TimePrint {
+  letter-spacing: 2px;
+  position: absolute;
+  bottom: 3px;
+  z-index: 1;
 }
 .LX_Player .LX_Progress:hover .LX_Progress_Line::before {
   scale: 0.6;

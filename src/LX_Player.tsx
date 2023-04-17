@@ -2,6 +2,18 @@ import { useRef, useState, useEffect } from "react";
 import "./LX_Player.css";
 
 function LX_Player() {
+  const returnTime = (time: number) => {
+    time = Math.floor(time);
+    if (time >= 60) {
+      return (
+        (Math.floor(time / 60) < 10
+          ? "0" + Math.floor(time / 60)
+          : Math.floor(time / 60)) +
+        ":" +
+        (time % 60 < 10 ? "0" + (time % 60) : time % 60)
+      );
+    }
+  };
   const iconPaths = {
     onPause:
       "M17.8371 8.75001C19.2128 9.51115 19.2128 11.4889 17.8371 12.25L5.96826 18.817C4.63526 19.5545 3 18.5904 3 17.067L3 3.93302C3 2.40958 4.63526 1.44549 5.96826 2.18303L17.8371 8.75001Z",
@@ -12,24 +24,14 @@ function LX_Player() {
   const LX_Progress = useRef<any>(null);
   const LX_Progress_Line = useRef<any>(null);
   const LX_Video = useRef<any>(null);
+  const LX_Mini_Video = useRef<any>(null);
 
   const LX_TimeShow = useRef<any>(null);
+  const LX_TimePrint = useRef<any>(null);
   const LX_SLine = useRef<any>(null);
 
   const [playIcon, setPlayIcon] = useState<string>(iconPaths.onPause);
   useEffect(() => {
-    const returnTime = (time: number) => {
-      time = Math.floor(time);
-      if (time >= 60)
-        return (
-          (Math.floor(time / 60) < 10
-            ? "0" + Math.floor(time / 60)
-            : Math.floor(time / 60)) +
-          ":" +
-          (time % 60 < 10 ? "0" + (time % 60) : time % 60)
-        );
-    };
-
     const timeUpdate = () => {
       var getPer =
         (LX_Video.current?.currentTime * 100) / LX_Video.current?.duration;
@@ -42,6 +44,7 @@ function LX_Player() {
         (LX_Video.current?.duration / 100) * getPers;
     };
     const getTime = (e: any) => {
+      var getPersq = (e.offsetX / LX_Progress.current?.clientWidth) * 100;
       if (LX_TimeShow.current.style.opacity == 0) {
         LX_TimeShow.current.style.visibility = "visible";
         LX_TimeShow.current.style.opacity = 1;
@@ -50,8 +53,9 @@ function LX_Player() {
         ((e.offsetX - LX_TimeShow.current.clientWidth / 2) /
           LX_Progress.current?.clientWidth) *
         100;
-
-      LX_TimeShow.current.textContent = returnTime(
+      LX_Mini_Video.current.currentTime =
+        (LX_Video.current?.duration / 100) * getPersq;
+      LX_TimePrint.current.textContent = returnTime(
         (LX_Video.current?.duration / 100) * getPerc
       );
       LX_TimeShow.current.style.left = getPerc + "%";
@@ -64,17 +68,17 @@ function LX_Player() {
       LX_TimeShow.current.style.visibility = "hidden";
       LX_TimeShow.current.style.opacity = 0;
       LX_SLine.current.style.width = 0;
+      LX_Progress.current?.removeEventListener("mousemove", slideSet);
     };
 
     LX_Video.current?.addEventListener("timeupdate", timeUpdate);
     LX_Progress.current?.addEventListener("click", (e: any) => setTime(e));
     LX_Progress.current?.addEventListener("mousemove", (e: any) => getTime(e));
-    LX_Progress.current?.addEventListener("mousedown", function () {});
+    LX_Progress.current?.addEventListener("mousedown", function () {
+      LX_Progress.current?.addEventListener("mousemove", slideSet);
+    });
     LX_Progress.current?.addEventListener("mouseup", function (y: any) {
-      var getPers = (y.offsetX / LX_Progress.current?.clientWidth) * 100;
-      LX_Progress_Line.current.style.width = getPers + "%";
-      LX_Video.current.currentTime =
-        (LX_Video.current?.duration / 100) * getPers;
+      LX_Progress.current?.removeEventListener("mousemove", slideSet);
     });
     LX_Progress.current?.addEventListener("mouseleave", offLine);
   }, []);
@@ -86,6 +90,13 @@ function LX_Player() {
       LX_Video.current?.pause();
       setPlayIcon(iconPaths.onPause);
     }
+  };
+  const slideSet = (y: any) => {
+    console.log("sliding");
+
+    var getPers = (y.offsetX / LX_Progress.current?.clientWidth) * 100;
+    LX_Progress_Line.current.style.width = getPers + "%";
+    LX_Video.current.currentTime = (LX_Video.current?.duration / 100) * getPers;
   };
   const LX_Fullscreen = () => {
     if (document.fullscreenElement == null) {
@@ -104,7 +115,16 @@ function LX_Player() {
       <div className="LX_Controls_Fade" onClick={LX_Play}></div>
       <div className="LX_Controls_Content">
         <div ref={LX_Progress} className="LX_Progress">
-          <div className="LX_TimeShow" ref={LX_TimeShow}></div>
+          <div className="LX_TimeShow" ref={LX_TimeShow}>
+            <video
+              ref={LX_Mini_Video}
+              src="https://cdn17.croconet.ge/serial/Demon-Slayer-Kimetsu-no-Yaiba/sezon-1/24_Epizodi_600.mp4"
+              className="LX_Mini_Video"
+            ></video>
+            <span className="LX_TimePrint" ref={LX_TimePrint}>
+              00:00
+            </span>
+          </div>
 
           <div className="LX_Progress_BLine"></div>
           <div className="LX_Progress_SLine" ref={LX_SLine}></div>
