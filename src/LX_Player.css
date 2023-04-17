@@ -1,3 +1,7 @@
+@font-face {
+  font-family: LX_main;
+  src: url("./fonts/K2D-Bold.ttf");
+}
 .LX_Player {
   display: flex;
   flex-direction: column;
@@ -7,6 +11,8 @@
   aspect-ratio: 16/9;
   border-radius: 5px;
   overflow: hidden;
+  font-family: LX_main;
+  letter-spacing: 1px;
 }
 .LX_Player video {
   height: 100%;
@@ -26,13 +32,75 @@
   bottom: 0;
 }
 .LX_Player .LX_Progress {
+  height: 10px;
   cursor: pointer;
-  height: 4px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
   width: 100%;
-  background-color: #ff007a;
   border-radius: 2px;
   position: absolute;
   top: 0;
+}
+.LX_Player .LX_Progress .LX_TimeShow {
+  position: absolute;
+  top: -30px;
+  height: 25px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+  background-color: #050614;
+  pointer-events: none;
+  visibility: hidden;
+  font-size: 12px;
+  opacity: 1;
+  transition: opacity 0.2s, visibility 0.5s;
+  user-select: none;
+}
+.LX_Player .LX_Progress:hover .LX_Progress_Line::before {
+  scale: 0.6;
+}
+.LX_Player .LX_Progress .LX_Progress_BLine {
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background-color: #050614;
+  user-select: none;
+  pointer-events: none;
+}
+.LX_Player .LX_Progress .LX_Progress_SLine {
+  position: absolute;
+  height: 4px;
+  width: 0%;
+  background-color: rgba(255, 255, 255, 0.2);
+  user-select: none;
+  pointer-events: none;
+}
+.LX_Player .LX_Progress .LX_Progress_Line {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background-color: #ff007a;
+  user-select: none;
+  pointer-events: none;
+}
+.LX_Player .LX_Progress .LX_Progress_Line::before {
+  content: "";
+  position: absolute;
+  right: -8px;
+  height: 16px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background-color: #ff007a;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  scale: 0;
+  transition: 0.2s;
 }
 .LX_Player .LX_Controls {
   position: absolute;
@@ -42,6 +110,7 @@
   justify-content: space-between;
   height: calc(100% - 4px);
   width: 100%;
+  padding: 0 2px;
 }
 .LX_Player .LX_Play {
   cursor: pointer;
