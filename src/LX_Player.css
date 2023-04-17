@@ -1,0 +1,55 @@
+.LX_Player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 600px;
+  aspect-ratio: 16/9;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.LX_Player video {
+  height: 100%;
+  width: 100%;
+}
+.LX_Player .LX_Controls_Fade {
+  position: absolute;
+  height: 90px;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  bottom: 0;
+}
+.LX_Player .LX_Controls_Content {
+  width: 96%;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+}
+.LX_Player .LX_Progress {
+  cursor: pointer;
+  height: 4px;
+  width: 100%;
+  background-color: #ff007a;
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+}
+.LX_Player .LX_Controls {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(100% - 4px);
+  width: 100%;
+}
+.LX_Player .LX_Play {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.LX_Player .LX_Fullscreen {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
