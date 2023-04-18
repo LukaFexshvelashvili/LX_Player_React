@@ -27,12 +27,14 @@ $LineHeight: 4px;
         width: 100%;
         background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
         bottom: 0;
+        transition: opacity 0.3s, visibility 0.5s;
     }
     .LX_Controls_Content {
         width: 96%;
         height: 40px;
         position: absolute;
         bottom: 0;
+        transition: opacity 0.3s, visibility 0.5s;
     }
     .LX_Progress {
         height: 10px;
@@ -137,6 +139,9 @@ $LineHeight: 4px;
         width: 100%;
         padding: 0 2px;
         .LX_LeftSide {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         .LX_RightSide {
         }
@@ -150,5 +155,88 @@ $LineHeight: 4px;
         cursor: pointer;
         display: flex;
         align-items: center;
+    }
+    .LX_Volume {
+        display: flex;
+        align-items: center;
+        position: relative;
+        justify-content: center;
+        svg {
+            cursor: pointer;
+        }
+        &:hover {
+            .LX_Volume_Slider {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+        .LX_Volume_Slider {
+            position: absolute;
+            height: 120px;
+            width: 30px;
+            border-radius: 5px;
+            bottom: 35px;
+            background-color: $BgColor;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.5s;
+            &::before {
+                content: "";
+                position: absolute;
+                height: 45px;
+                width: 100%;
+                bottom: -13px;
+                z-index: 2;
+                background: transparent;
+            }
+            &:hover {
+                visibility: visible;
+                opacity: 1;
+            }
+            .LX_Volume_Slider_Container {
+                display: flex;
+                justify-content: center;
+                position: relative;
+                height: 100%;
+                width: 12px;
+                user-select: none;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    height: 100%;
+                    width: 6px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    background-color: $SLine;
+                }
+                .LX_Volume_Slide {
+                    display: flex;
+                    justify-content: center;
+                    pointer-events: none;
+                    position: absolute;
+                    bottom: 0;
+                    border-radius: 4px;
+                    width: 6px;
+                    height: 50%;
+                    cursor: pointer;
+                    background-color: $MainColor;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -6px;
+                        height: 12px;
+                        aspect-ratio: 1;
+                        border-radius: 5px;
+                        background-color: $MainColor;
+                        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+                        transition: 0.2s;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
     }
 }

@@ -24,12 +24,14 @@
   width: 100%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   bottom: 0;
+  transition: opacity 0.3s, visibility 0.5s;
 }
 .LX_Player .LX_Controls_Content {
   width: 96%;
   height: 40px;
   position: absolute;
   bottom: 0;
+  transition: opacity 0.3s, visibility 0.5s;
 }
 .LX_Player .LX_Progress {
   height: 10px;
@@ -130,6 +132,11 @@
   width: 100%;
   padding: 0 2px;
 }
+.LX_Player .LX_Controls .LX_LeftSide {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 .LX_Player .LX_Play {
   cursor: pointer;
   display: flex;
@@ -139,4 +146,85 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+.LX_Player .LX_Volume {
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+}
+.LX_Player .LX_Volume svg {
+  cursor: pointer;
+}
+.LX_Player .LX_Volume:hover .LX_Volume_Slider {
+  visibility: visible;
+  opacity: 1;
+}
+.LX_Player .LX_Volume .LX_Volume_Slider {
+  position: absolute;
+  height: 120px;
+  width: 30px;
+  border-radius: 5px;
+  bottom: 35px;
+  background-color: #050614;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.5s;
+}
+.LX_Player .LX_Volume .LX_Volume_Slider::before {
+  content: "";
+  position: absolute;
+  height: 45px;
+  width: 100%;
+  bottom: -13px;
+  z-index: 2;
+  background: transparent;
+}
+.LX_Player .LX_Volume .LX_Volume_Slider:hover {
+  visibility: visible;
+  opacity: 1;
+}
+.LX_Player .LX_Volume .LX_Volume_Slider .LX_Volume_Slider_Container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+  width: 12px;
+  user-select: none;
+}
+.LX_Player .LX_Volume .LX_Volume_Slider .LX_Volume_Slider_Container::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.LX_Player .LX_Volume .LX_Volume_Slider .LX_Volume_Slider_Container .LX_Volume_Slide {
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  border-radius: 4px;
+  width: 6px;
+  height: 50%;
+  cursor: pointer;
+  background-color: #ff007a;
+}
+.LX_Player .LX_Volume .LX_Volume_Slider .LX_Volume_Slider_Container .LX_Volume_Slide::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  height: 12px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background-color: #ff007a;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
+  cursor: pointer;
 }
